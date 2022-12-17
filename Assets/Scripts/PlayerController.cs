@@ -17,7 +17,7 @@ namespace TLC.Player {
         public float mouseSpeed = 1f;
 
         private void Update() {
-            //horizontal movement
+            //*very* basic movement
             Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             charController.Move(transform.TransformDirection(move) * Time.deltaTime * playerSpeed);
 

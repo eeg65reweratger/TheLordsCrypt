@@ -2,21 +2,21 @@ Shader "LowPolySeagull/Unlit Surface"
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "white" {}
+        _MainTex("Color (RGB) Alpha (A)", 2D) = "white" {}
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "Queue" = "Transparent" "RenderType" = "Transparent" }
         LOD 0
         Cull Off
-        Lighting Off
+        Blend SrcAlpha OneMinusSrcAlpha
         Fog { Mode Off }
 
         Pass
         {
             CGPROGRAM
             #pragma vertex vert
-            #pragma fragment frag
+            #pragma fragment frag alpha
 
             #include "UnityCG.cginc"
 
