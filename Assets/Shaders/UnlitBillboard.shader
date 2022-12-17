@@ -10,13 +10,13 @@ Shader "LowPolySeagull/Unlit Billboard"
         LOD 0
         Cull Off
         Blend SrcAlpha OneMinusSrcAlpha
-        Fog { Mode Off }
 
         Pass
         {
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag alpha
+            #pragma multi_compile_fog
 
             #include "UnityCG.cginc"
 
@@ -29,6 +29,7 @@ Shader "LowPolySeagull/Unlit Billboard"
             struct v2f
             {
                 float2 uv : TEXCOORD0;
+                UNITY_FOG_COORDS(1)
                 float4 vertex : SV_POSITION;
             };
 
@@ -38,7 +39,6 @@ Shader "LowPolySeagull/Unlit Billboard"
             v2f vert(appdata v)
             {
                 v2f o;
-
 #if defined(USING_STEREO_MATRICES)
                 float3 cameraPos = lerp(unity_StereoWorldSpaceCameraPos[0], unity_StereoWorldSpaceCameraPos[1], 0.5);
 #else
@@ -68,12 +68,14 @@ Shader "LowPolySeagull/Unlit Billboard"
                 //Now just normal MVP multiply, but with the new objectToWorld injected in place of matrix M
                 o.vertex = mul(UNITY_MATRIX_VP, mul(objectToWorld, v.vertex));
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                UNITY_TRANSFER_FOG(o,o.vertex);
                 return o;
             }
 
             fixed4 frag(v2f i) : SV_Target
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
+                UNITY_APPLY_FOG(i.fogCoord, col);
                 return col;
             }
             ENDCG

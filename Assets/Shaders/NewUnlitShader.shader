@@ -1,21 +1,20 @@
-Shader "LowPolySeagull/Unlit Surface"
+Shader "Unlit/NewUnlitShader"
 {
     Properties
     {
-        _MainTex("Color (RGB) Alpha (A)", 2D) = "white" {}
+        _MainTex ("Texture", 2D) = "white" {}
     }
     SubShader
     {
-        Tags { "Queue" = "Transparent" "RenderType" = "Transparent" }
-        LOD 0
-        Cull Off
-        Blend SrcAlpha OneMinusSrcAlpha
+        Tags { "RenderType"="Opaque" }
+        LOD 100
 
         Pass
         {
             CGPROGRAM
             #pragma vertex vert
-            #pragma fragment frag alpha
+            #pragma fragment frag
+            // make fog work
             #pragma multi_compile_fog
 
             #include "UnityCG.cginc"
@@ -33,8 +32,8 @@ Shader "LowPolySeagull/Unlit Surface"
                 float4 vertex : SV_POSITION;
             };
 
-            uniform sampler2D _MainTex;
-            uniform float4 _MainTex_ST;
+            sampler2D _MainTex;
+            float4 _MainTex_ST;
 
             v2f vert (appdata v)
             {
@@ -47,7 +46,9 @@ Shader "LowPolySeagull/Unlit Surface"
 
             fixed4 frag (v2f i) : SV_Target
             {
+                // sample the texture
                 fixed4 col = tex2D(_MainTex, i.uv);
+                // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
                 return col;
             }
