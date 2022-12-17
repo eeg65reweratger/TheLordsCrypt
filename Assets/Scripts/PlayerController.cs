@@ -5,12 +5,10 @@
 
 using UnityEngine;
 
-namespace TLC.Player
-{
+namespace TLC.Player {
     [RequireComponent(typeof(CharacterController))]
     [AddComponentMenu("Custom/Player/Player Controller")]
-    public class PlayerController : MonoBehaviour
-    {
+    public class PlayerController : MonoBehaviour {
         [Header("Required Components")]
         public CharacterController charController;
 
@@ -21,8 +19,18 @@ namespace TLC.Player
 
         public static bool isGhostModeToggled = false;
 
-        private void Update()
-        {
+        private void OnGUI() {
+            if (isGhostModeToggled)
+                UnityEngine.GUI.Label(new Rect(10, 10, 100, 20), "GHOST MODE");
+        }
+
+        private void Start() {
+            //automatically lock our cursor
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        private void Update() {
             //*very* basic movement
             Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
@@ -40,12 +48,10 @@ namespace TLC.Player
                 transform.Rotate(0, mouseSpeed, 0);
 
             //debug key actions
-            if (Input.GetKeyDown(KeyCode.F1) && isGhostModeToggled)
-            {
+            if (Input.GetKeyDown(KeyCode.F1) && isGhostModeToggled) {
                 isGhostModeToggled = false;
                 Physics.IgnoreLayerCollision(0, 3, false);
-            } else if (Input.GetKeyDown(KeyCode.F1) && !isGhostModeToggled)
-            {
+            } else if (Input.GetKeyDown(KeyCode.F1) && !isGhostModeToggled) {
                 isGhostModeToggled = true;
                 Physics.IgnoreLayerCollision(0, 3, true);
             }

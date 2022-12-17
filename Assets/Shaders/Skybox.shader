@@ -1,8 +1,8 @@
 Shader "LowPolySeagull/Skybox Color"
 {
     Properties {
-		_Color1 ("Bottom Color", Color) = (0,0,0,1)
-		_Color2 ("Top Color", Color) = (1,1,1,1)
+		_Color1 ("Top Color", Color) = (0,0,0,1)
+		_Color2 ("Bottom Color", Color) = (1,1,1,1)
 		_Tiling ("Tiling", Range(1, 500)) = 1
 		_Direction ("Direction", Range(0, 1)) = 90
 		_WarpScale ("Warp Scale", Range(0, 1)) = 0

@@ -2,7 +2,8 @@ Shader "LowPolySeagull/Unlit Surface"
 {
     Properties
     {
-        _MainTex("Color (RGB) Alpha (A)", 2D) = "white" {}
+        _MainTex("Texture", 2D) = "white" {}
+        _Color("Color (RGB)", Color) = (0, 0, 0, 1)
     }
     SubShader
     {
