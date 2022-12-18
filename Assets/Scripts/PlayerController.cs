@@ -50,10 +50,10 @@ namespace TLC.Player {
             //debug key actions
             if (Input.GetKeyDown(KeyCode.F1) && isGhostModeToggled) {
                 isGhostModeToggled = false;
-                Physics.IgnoreLayerCollision(0, 3, false);
+                Physics.IgnoreLayerCollision(3, 7, false);
             } else if (Input.GetKeyDown(KeyCode.F1) && !isGhostModeToggled) {
                 isGhostModeToggled = true;
-                Physics.IgnoreLayerCollision(0, 3, true);
+                Physics.IgnoreLayerCollision(3, 7, true);
             }
         }
     }
