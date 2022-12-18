@@ -14,9 +14,10 @@ namespace TLC.GUI {
                 isToggled = false;
             else if (!isToggled)
                 isToggled = true;
-
-			minimapObject.SetActive(isToggled);
-		}
+		
+		//TODO: Stop rendering the minimap to its render texture when disabled
+		minimapObject.SetActive(isToggled);
+	}
 
         private void Update() {
             if (Input.GetKeyDown(minimapToggle))
