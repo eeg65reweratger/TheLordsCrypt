@@ -5,7 +5,7 @@
 
 using UnityEngine;
 
-namespace TLC.GUI {
+namespace TLC {
     public class DebugText : MonoBehaviour {
         public void RenderText() {
 

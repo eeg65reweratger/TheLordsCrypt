@@ -5,7 +5,7 @@
 
 using UnityEngine;
 
-namespace TLC.Player {
+namespace TLC {
     [RequireComponent(typeof(CharacterController))]
     [AddComponentMenu("Custom/Player/Player Controller")]
     public class PlayerController : MonoBehaviour {
@@ -16,6 +16,7 @@ namespace TLC.Player {
         public float playerSpeed = 4f;
         public float sprintModifier = 2f;
         public float mouseSpeed = 1f;
+        public float keyboardSpeed = 2f;
 
         public static bool isGhostModeToggled = false;
 
@@ -30,7 +31,7 @@ namespace TLC.Player {
             Cursor.lockState = CursorLockMode.Locked;
         }
 
-        private void Update() {
+        private void FixedUpdate() {
             //*very* basic movement
             Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
@@ -43,9 +44,9 @@ namespace TLC.Player {
             transform.Rotate(0, (Input.GetAxis("Mouse X") * mouseSpeed), 0);
             //or...
             if (Input.GetKey(KeyCode.LeftArrow))
-                transform.Rotate(0, -mouseSpeed, 0);
+                transform.Rotate(0, -keyboardSpeed, 0);
             else if (Input.GetKey(KeyCode.RightArrow))
-                transform.Rotate(0, mouseSpeed, 0);
+                transform.Rotate(0, keyboardSpeed, 0);
 
             //debug key actions
             if (Input.GetKeyDown(KeyCode.F1) && isGhostModeToggled) {

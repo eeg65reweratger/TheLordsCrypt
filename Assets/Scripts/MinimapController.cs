@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace TLC.GUI {
+namespace TLC {
     public class MinimapController : MonoBehaviour {
         public KeyCode minimapToggle = KeyCode.Tab;
         public GameObject minimapObject;
@@ -14,10 +12,10 @@ namespace TLC.GUI {
                 isToggled = false;
             else if (!isToggled)
                 isToggled = true;
-		
-		//TODO: Stop rendering the minimap to its render texture when disabled
-		minimapObject.SetActive(isToggled);
-	}
+
+            //TODO: Stop rendering the minimap to its render texture when disabled
+            minimapObject.SetActive(isToggled);
+        }
 
         private void Update() {
             if (Input.GetKeyDown(minimapToggle))
