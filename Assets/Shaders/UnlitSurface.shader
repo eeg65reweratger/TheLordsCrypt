@@ -9,7 +9,7 @@ Shader "LowPolySeagull/Unlit Surface"
     {
         Tags { "Queue" = "Transparent" "RenderType" = "Transparent" }
         LOD 0
-        Cull Back
+        Cull False
         Blend SrcAlpha OneMinusSrcAlpha
 
         Pass

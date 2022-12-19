@@ -22,7 +22,7 @@ namespace TLC {
 
         private void OnGUI() {
             if (isGhostModeToggled)
-                UnityEngine.GUI.Label(new Rect(10, 10, 100, 20), "GHOST MODE");
+                GUI.Label(new Rect(10, 10, 100, 20), "GHOST MODE");
         }
 
         private void Start() {

@@ -4,16 +4,17 @@ namespace TLC {
     public class MinimapController : MonoBehaviour {
         public KeyCode minimapToggle = KeyCode.Tab;
         public GameObject minimapObject;
+        public RenderTexture minimapTex;
 
         private bool isToggled = false;
 
         public void ToggleMinimap() {
-            if (isToggled)
+            if (isToggled) {
                 isToggled = false;
-            else if (!isToggled)
+                minimapTex.Release(); //unity rec's releasing render tex's when not used
+            } else if (!isToggled)
                 isToggled = true;
 
-            //TODO: Stop rendering the minimap to its render texture when disabled
             minimapObject.SetActive(isToggled);
         }
 
