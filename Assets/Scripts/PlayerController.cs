@@ -17,6 +17,7 @@ namespace TLC {
         public float sprintModifier = 2f;
         public float mouseSpeed = 1f;
         public float keyboardSpeed = 2f;
+        public bool alwaysRun = false;
 
         public static bool isGhostModeToggled = false;
 
@@ -31,11 +32,24 @@ namespace TLC {
             Cursor.lockState = CursorLockMode.Locked;
         }
 
+        private void FireShot() {
+            int layerMask = 1 << 3;
+            layerMask = ~layerMask;
+
+            Vector3 shotOrigin = transform.position;
+            Vector3 shotDirection = transform.TransformDirection(Vector3.forward);
+
+            RaycastHit hit;
+            if (Physics.Raycast(shotOrigin, shotDirection, out hit, 50f, layerMask)) {
+                //Debug.DrawRay(shotOrigin + new Vector3(0, .5f, 0), shotDirection * 50f, Color.red, 4f);
+            }
+        }
+
         private void FixedUpdate() {
             //*very* basic movement
             Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
-            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) || alwaysRun)
                 charController.Move(transform.TransformDirection(move) * Time.deltaTime * (playerSpeed * sprintModifier));
             else
                 charController.Move(transform.TransformDirection(move) * Time.deltaTime * playerSpeed);
@@ -51,11 +65,20 @@ namespace TLC {
             //debug key actions
             if (Input.GetKeyDown(KeyCode.F1) && isGhostModeToggled) {
                 isGhostModeToggled = false;
-                Physics.IgnoreLayerCollision(3, 7, false);
+                Physics.IgnoreLayerCollision(3, 7, false); //World
+                Physics.IgnoreLayerCollision(3, 8, false); //Secret
             } else if (Input.GetKeyDown(KeyCode.F1) && !isGhostModeToggled) {
                 isGhostModeToggled = true;
-                Physics.IgnoreLayerCollision(3, 7, true);
+                Physics.IgnoreLayerCollision(3, 7, true); //World
+                Physics.IgnoreLayerCollision(3, 8, true); //Secret
             }
+
+            //lock our y pos so we never go up or down
+            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+
+            //fire controls
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.RightControl) || Input.GetKeyDown(KeyCode.LeftControl))
+                FireShot();
         }
     }
 }
