@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Secret
   - Enemy
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - World
   - Secret
   - Enemy
-  - 
+  - Deco
   - 
   - 
   - 

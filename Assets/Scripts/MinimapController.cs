@@ -11,7 +11,7 @@ namespace TLC {
         public void ToggleMinimap() {
             if (isToggled) {
                 isToggled = false;
-                minimapTex.Release(); //unity rec's releasing render tex's when not used
+                minimapTex.Release(); //unity rec's releasing render textures when not used
             } else if (!isToggled)
                 isToggled = true;
 

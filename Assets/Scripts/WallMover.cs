@@ -41,13 +41,15 @@ namespace TLC {
             }
 
             moveMag = (destElem.position - curPos).sqrMagnitude;
-        }
+		}
 
         private void OnTriggerStay(Collider coll) {
             if (Input.GetKeyDown(KeyCode.E) && !isMoving) {
                 isMoving = true;
-                Destroy(boxColl, 0);
-                audioSource.Play();
+				audioSource.Play();
+				Destroy(boxColl, 0);
+                LevelStats.currentSecretCount++;
+                Debug.Log($"Found Secret! {LevelStats.currentSecretCount} out of {LevelStats.totalSecretCount}");
             }
         }
     }

@@ -1,8 +1,3 @@
-/* PlayerController.cs - Controls player movement and stats
- * Zachary Fetters <zachfett@protonmail.com> - Dec 15 2022
- * Copyright (c) 2022, LowPolySeagull (Zachary Fetters)
- */
-
 using UnityEngine;
 
 namespace TLC {
@@ -41,6 +36,7 @@ namespace TLC {
 
             RaycastHit hit;
             if (Physics.Raycast(shotOrigin, shotDirection, out hit, 50f, layerMask)) {
+                LevelStats.totalShotsFired++;
                 //Debug.DrawRay(shotOrigin + new Vector3(0, .5f, 0), shotDirection * 50f, Color.red, 4f);
             }
         }
@@ -67,11 +63,15 @@ namespace TLC {
                 isGhostModeToggled = false;
                 Physics.IgnoreLayerCollision(3, 7, false); //World
                 Physics.IgnoreLayerCollision(3, 8, false); //Secret
-            } else if (Input.GetKeyDown(KeyCode.F1) && !isGhostModeToggled) {
+				Physics.IgnoreLayerCollision(3, 9, false); //Enemy
+				Physics.IgnoreLayerCollision(3, 10, false); //Deco
+			} else if (Input.GetKeyDown(KeyCode.F1) && !isGhostModeToggled) {
                 isGhostModeToggled = true;
                 Physics.IgnoreLayerCollision(3, 7, true); //World
                 Physics.IgnoreLayerCollision(3, 8, true); //Secret
-            }
+				Physics.IgnoreLayerCollision(3, 9, true); //Enemy
+				Physics.IgnoreLayerCollision(3, 10, true); //Deco
+			}
 
             //lock our y pos so we never go up or down
             transform.position = new Vector3(transform.position.x, 0, transform.position.z);
