@@ -7,29 +7,47 @@ namespace TLC {
         private Vector3 movePos;
         private Vector3 curPos;
         private float moveMag;
+        public Transform destElem;
+        public AudioSource audioSource;
+
+        private void OnDrawGizmosSelected() {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(transform.position, destElem.position);
+            Gizmos.color = new Color(1f, 1f, 0f, .5f);
+            Gizmos.DrawCube(destElem.position, new Vector3(2f, 2f, 2f));
+        }
+
+        private void OnDrawGizmos() {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireCube(transform.position, new Vector3(2f, 2f, 2f));
+        }
 
         private void Start() {
             boxColl = gameObject.AddComponent<BoxCollider>();
             boxColl.center = new Vector3(1.5f, 0, 0);
             boxColl.size = new Vector3(1, 2, 2);
             boxColl.isTrigger = true;
-            movePos = new Vector3(transform.position.x - 4, transform.position.y, transform.position.z);
         }
 
         private void Update() {
-            if (isMoving && moveMag > 0.0001f) {
-                transform.Translate(-transform.right * Time.deltaTime);
-                curPos = transform.position;
-            } else if (moveMag <= 0.0001f)
-                isMoving = false;
+            float step = 1.5f * Time.deltaTime;
 
-            moveMag = (movePos - curPos).sqrMagnitude;
+            if (isMoving && moveMag > 0.00001f) {
+                transform.position = Vector3.MoveTowards(transform.position, destElem.position, step);
+                curPos = transform.position;
+            } else if (moveMag <= 0.00001f) {
+                isMoving = false;
+                audioSource.Stop();
+            }
+
+            moveMag = (destElem.position - curPos).sqrMagnitude;
         }
 
         private void OnTriggerStay(Collider coll) {
             if (Input.GetKeyDown(KeyCode.E) && !isMoving) {
                 isMoving = true;
                 Destroy(boxColl, 0);
+                audioSource.Play();
             }
         }
     }
