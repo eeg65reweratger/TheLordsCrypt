@@ -25,10 +25,10 @@ namespace TLC {
                 Debug.Log($"Total Enemies: {totalEnemyCount}, " +
                           $"Total Secrets: {totalSecretCount}, " +
                           $"Total Items: {totalItemCount}");
-		}
+        }
 
         private void Start() {
-            GetCounts(true);
+            GetCounts();
         }
     }
 }

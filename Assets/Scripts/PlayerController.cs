@@ -1,4 +1,5 @@
 using UnityEngine;
+using static TLC.LevelStats;
 
 namespace TLC {
     [RequireComponent(typeof(CharacterController))]
@@ -13,13 +14,6 @@ namespace TLC {
         public float mouseSpeed = 1f;
         public float keyboardSpeed = 2f;
         public bool alwaysRun = false;
-
-        public static bool isGhostModeToggled = false;
-
-        private void OnGUI() {
-            if (isGhostModeToggled)
-                GUI.Label(new Rect(10, 10, 100, 20), "GHOST MODE");
-        }
 
         private void Start() {
             //automatically lock our cursor
@@ -36,7 +30,7 @@ namespace TLC {
 
             RaycastHit hit;
             if (Physics.Raycast(shotOrigin, shotDirection, out hit, 50f, layerMask)) {
-                LevelStats.totalShotsFired++;
+                totalShotsFired++;
                 //Debug.DrawRay(shotOrigin + new Vector3(0, .5f, 0), shotDirection * 50f, Color.red, 4f);
             }
         }
@@ -57,21 +51,6 @@ namespace TLC {
                 transform.Rotate(0, -keyboardSpeed, 0);
             else if (Input.GetKey(KeyCode.RightArrow))
                 transform.Rotate(0, keyboardSpeed, 0);
-
-            //debug key actions
-            if (Input.GetKeyDown(KeyCode.F1) && isGhostModeToggled) {
-                isGhostModeToggled = false;
-                Physics.IgnoreLayerCollision(3, 7, false); //World
-                Physics.IgnoreLayerCollision(3, 8, false); //Secret
-				Physics.IgnoreLayerCollision(3, 9, false); //Enemy
-				Physics.IgnoreLayerCollision(3, 10, false); //Deco
-			} else if (Input.GetKeyDown(KeyCode.F1) && !isGhostModeToggled) {
-                isGhostModeToggled = true;
-                Physics.IgnoreLayerCollision(3, 7, true); //World
-                Physics.IgnoreLayerCollision(3, 8, true); //Secret
-				Physics.IgnoreLayerCollision(3, 9, true); //Enemy
-				Physics.IgnoreLayerCollision(3, 10, true); //Deco
-			}
 
             //lock our y pos so we never go up or down
             transform.position = new Vector3(transform.position.x, 0, transform.position.z);

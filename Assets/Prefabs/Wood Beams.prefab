@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 752974373510589699}
   - component: {fileID: 752974373510589702}
   - component: {fileID: 752974373510589697}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wood Beams
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &752974373510589699
 Transform:

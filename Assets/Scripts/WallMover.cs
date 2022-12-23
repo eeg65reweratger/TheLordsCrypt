@@ -1,4 +1,6 @@
 using UnityEngine;
+using static TLC.DebugControls;
+using static TLC.LevelStats;
 
 namespace TLC {
     public class WallMover : MonoBehaviour {
@@ -8,7 +10,9 @@ namespace TLC {
         private Vector3 curPos;
         private float moveMag;
         public Transform destElem;
-        public AudioSource audioSource;
+        public Vector3 destPos;
+        public AudioSource movingSound;
+        public AudioSource secretSound;
 
         private void OnDrawGizmosSelected() {
             Gizmos.color = Color.yellow;
@@ -27,29 +31,33 @@ namespace TLC {
             boxColl.center = new Vector3(1.5f, 0, 0);
             boxColl.size = new Vector3(1, 2, 2);
             boxColl.isTrigger = true;
+            destPos = destElem.position;
         }
 
-        private void Update() {
+        private void FixedUpdate() {
             float step = 1.5f * Time.deltaTime;
 
             if (isMoving && moveMag > 0.00001f) {
-                transform.position = Vector3.MoveTowards(transform.position, destElem.position, step);
+                transform.position = Vector3.MoveTowards(transform.position, destPos, step);
                 curPos = transform.position;
-            } else if (moveMag <= 0.00001f) {
+            } else if (isMoving && moveMag <= 0.00001f) {
+                movingSound.Pause();
+                movingSound.Stop();
+                if (!movingSound.isPlaying)
+                    secretSound.Play();
                 isMoving = false;
-                audioSource.Stop();
             }
 
-            moveMag = (destElem.position - curPos).sqrMagnitude;
-		}
+            moveMag = (destPos - curPos).sqrMagnitude;
+        }
 
         private void OnTriggerStay(Collider coll) {
             if (Input.GetKeyDown(KeyCode.E) && !isMoving) {
                 isMoving = true;
-				audioSource.Play();
-				Destroy(boxColl, 0);
-                LevelStats.currentSecretCount++;
-                Debug.Log($"Found Secret! {LevelStats.currentSecretCount} out of {LevelStats.totalSecretCount}");
+                movingSound.Play();
+                Destroy(boxColl, 0);
+                currentSecretCount++;
+                AddStatusText("Secret Discovered!");
             }
         }
     }
