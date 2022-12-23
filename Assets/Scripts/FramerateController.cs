@@ -15,6 +15,8 @@ namespace TLC {
                 Application.targetFrameRate = maxFramerate;
             else if (vSyncEnabled) //cant do both so if vsync is enabled, enable that over the frame cap
                 QualitySettings.vSyncCount = 1;
+            else if (maxFramerate < 0 && !vSyncEnabled) //if both are disabled, unlimit the framerate
+                Application.targetFrameRate = 9999;
         }
     }
 }
