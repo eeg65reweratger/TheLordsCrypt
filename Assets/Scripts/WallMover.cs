@@ -28,8 +28,8 @@ namespace TLC {
 
         private void Start() {
             boxColl = gameObject.AddComponent<BoxCollider>();
-            boxColl.center = new Vector3(1.5f, 0, 0);
-            boxColl.size = new Vector3(1, 2, 2);
+            boxColl.center = new Vector3(0, 0, 0);
+            boxColl.size = new Vector3(3, 3, 3);
             boxColl.isTrigger = true;
             destPos = destElem.position;
         }
