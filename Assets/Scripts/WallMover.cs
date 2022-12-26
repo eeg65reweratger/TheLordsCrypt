@@ -52,7 +52,7 @@ namespace TLC {
         }
 
         private void OnTriggerStay(Collider coll) {
-            if (Input.GetKeyDown(KeyCode.E) && !isMoving) {
+            if (Input.GetKey(KeyCode.E) && !isMoving) {
                 isMoving = true;
                 movingSound.Play();
                 Destroy(boxColl, 0);

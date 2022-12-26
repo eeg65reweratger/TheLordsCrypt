@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1947621225850925693}
   - component: {fileID: 6810313369803228860}
   m_Layer: 7
-  m_Name: WorldCube
+  m_Name: Block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

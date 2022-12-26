@@ -13,6 +13,7 @@ namespace TLC {
         [Header("Required Game Objects")]
         public Canvas guiCanvas;
         public Text debugText;
+        public GameObject playerObject;
 
         //private state variables
         [Header("Debug States")]
@@ -46,7 +47,9 @@ namespace TLC {
                              $"<color=#ff0000>E</color>: {currentEnemyCount} / {totalEnemyCount}\r\n" +
                              $"<color=#fff31b>I</color>: {currentItemCount} / {totalItemCount}\r\n\r\n" +
                              $"FPS: {Mathf.Round(1f / Time.unscaledDeltaTime)}\r\n" +
-                             $"FT: {(1f / Time.unscaledDeltaTime / 1000f).ToString("f2")}ms";
+                             $"FT: {(1f / Time.unscaledDeltaTime / 1000f).ToString("f2")}ms\r\n\r\n" +
+                             $"Pos (X, Z): {playerObject.transform.position.x} / {playerObject.transform.position.z}\r\n" +
+                             $"Rot: {playerObject.transform.rotation.y}";
         }
 
         private void Start() {

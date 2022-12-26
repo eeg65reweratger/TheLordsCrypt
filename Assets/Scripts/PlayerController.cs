@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using static TLC.LevelStats;
 
@@ -52,8 +53,13 @@ namespace TLC {
             else if (Input.GetKey(KeyCode.RightArrow))
                 transform.Rotate(0, keyboardSpeed, 0);
 
-            //lock our y pos so we never go up or down
-            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            //lock our y pos so we never go up or down, also reduce accuracy of x and z
+            transform.position = new Vector3((float)Math.Round(transform.position.x, 4),
+                                             0,
+                                             (float)Math.Round(transform.position.z, 4));
+
+            //reduce accuracy of rotation
+            transform.rotation = new Quaternion(0f, (float)Math.Round(transform.rotation.y, 4), 0f, (float)Math.Round(transform.rotation.w, 4));
 
             //fire controls
             if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.RightControl) || Input.GetKeyDown(KeyCode.LeftControl))
