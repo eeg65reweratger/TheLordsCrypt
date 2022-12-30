@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace TLC {
     public class FramerateController : MonoBehaviour {
-        public int maxFramerate;
+        public int maxFramerate = 60;
         public bool vSyncEnabled = false;
 
         private void Awake() {
@@ -16,7 +16,7 @@ namespace TLC {
             else if (vSyncEnabled) //cant do both so if vsync is enabled, enable that over the frame cap
                 QualitySettings.vSyncCount = 1;
             else if (maxFramerate < 0 && !vSyncEnabled) //if both are disabled, unlimit the framerate
-                Application.targetFrameRate = 9999;
+                Application.targetFrameRate = 300;
         }
     }
 }
